@@ -12,6 +12,9 @@ class Board:
     CIRCLE_WON = 1
     CROSS_WON = 2
     WINDOW_NAME = 'Game'
+    CIRCLE = 1
+    CROSS = 2
+    EMPTY = 0
     H, W = 500, 500
 
     def __init__(self):
@@ -71,13 +74,17 @@ class Board:
 
         if self.board_state.all():
             self.game_state = Board.NO_ONE
-            
-    def _paint_borders(self):
-        cv2.line(self.area, (Board.W // 3, 0), (Board.W // 3, Board.H), (0, 0, 0), 3)
-        cv2.line(self.area, (2 * Board.W // 3, 0), (2 * Board.W // 3, Board.H), (0, 0, 0), 3)
 
-        cv2.line(self.area, (0, Board.H // 3), (Board.W, Board.H // 3), (0, 0, 0), 3)
-        cv2.line(self.area, (0, 2 * Board.H // 3), (Board.W, 2 * Board.H // 3), (0, 0, 0), 3)
+    def _paint_borders(self):
+        cv2.line(self.area, (Board.W // 3, 0),
+                 (Board.W // 3, Board.H), (0, 0, 0), 3)
+        cv2.line(self.area, (2 * Board.W // 3, 0),
+                 (2 * Board.W // 3, Board.H), (0, 0, 0), 3)
+
+        cv2.line(self.area, (0, Board.H // 3),
+                 (Board.W, Board.H // 3), (0, 0, 0), 3)
+        cv2.line(self.area, (0, 2 * Board.H // 3),
+                 (Board.W, 2 * Board.H // 3), (0, 0, 0), 3)
 
     def update(self, pos: tuple, circle: bool) -> bool:
         if self.board_state.all():
@@ -116,11 +123,14 @@ class Board:
         self.area = np.ones_like(self.area) * 255
         text_coord = (self.area.shape[0] // 2 - 100, self.area.shape[1] // 2)
         if self.game_state == Board.CROSS_WON:
-            cv2.putText(self.area, 'Cross won', text_coord, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
+            cv2.putText(self.area, 'Cross won', text_coord,
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
         elif self.game_state == Board.NO_ONE:
-            cv2.putText(self.area, 'No one won', text_coord, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
+            cv2.putText(self.area, 'No one won', text_coord,
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
         elif self.game_state == Board.CIRCLE_WON:
-            cv2.putText(self.area, 'Circles won', text_coord, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
+            cv2.putText(self.area, 'Circles won', text_coord,
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
 
     def reload(self):
         self.area = np.ones_like(self.area) * 255
@@ -189,8 +199,8 @@ def _test1():
 
 def _test2():
     b = Board()
-    b.update((0,0), circle=True)
-    b.update((2,0), circle=False)
+    b.update((0, 0), circle=True)
+    b.update((2, 0), circle=False)
     b.display()
     cv2.waitKey(0)
     cv2.destroyAllWindows()

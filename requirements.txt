@@ -1,4 +1,4 @@
 pytest
 numpy
 imutils
-cv2
+opencv-python

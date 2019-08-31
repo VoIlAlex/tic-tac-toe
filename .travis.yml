@@ -1,0 +1,12 @@
+language: python
+python:
+  - "3.6"
+  - "3.7"
+# install dependencies
+install:
+  - pip install -r requirements.txt
+# tests
+script:
+  - pytest
+env:
+  - CODECOV_TOKEN="38afd4e7-2f68-4a85-ab88-d7ccecf94ca9"
